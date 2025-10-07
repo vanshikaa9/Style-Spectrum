@@ -59,7 +59,7 @@ function hsvToRgb(h, s, v) {
         case 1: r = q, g = v, b = p; break;
         case 2: r = p, g = v, b = t; break;
         case 3: r = p, g = q, b = v; break;
-        case 4: r = t, g = p, b = v; break;
+            case 4: r = t, g = p, b = v; break;
         case 5: r = v, g = p, b = q; break;
     }
     return [Math.round(r * 255), Math.round(g * 255), Math.round(b * 255)];
@@ -159,8 +159,9 @@ function suggestPairingColors(dominantRgb) {
     return suggestions;
 }
 
-// --- UI & Event Handlers ---
+// --- UI & Event Handlers (Explicitly attached to window) ---
 
+// FIX: Ensure all global functions are explicitly defined on the window object
 window.handleImageUpload = function() {
     const fileInput = document.getElementById('imageUpload');
     const file = fileInput.files[0];
@@ -240,6 +241,7 @@ function renderSuggestions(suggestions) {
     }
 }
 
+// FIX: Ensure all global functions are explicitly defined on the window object
 window.analyzeImage = function() {
     if (!uploadedImage) {
         showError("Please upload an image first.");
@@ -294,6 +296,7 @@ const FIREBASE_COLLECTION_NAME = 'saved_palettes';
 /**
  * Saves the currently displayed palette to Firestore.
  */
+// FIX: Ensure all global functions are explicitly defined on the window object
 window.saveCurrentPalette = async function() {
     if (!db || !userId || !appId || !currentPaletteData || !currentPaletteData.dominant) {
         showError("Database not ready or no palette analyzed yet.");
@@ -332,6 +335,7 @@ window.saveCurrentPalette = async function() {
 /**
  * Loads palettes from Firestore in real-time.
  */
+// FIX: Ensure all global functions are explicitly defined on the window object
 window.loadPalettes = function() {
     if (!db || !userId || !appId) {
         console.warn("Database not ready to load palettes.");
